@@ -128,8 +128,12 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
 
+
+# css 파일 분리 설정
 STATIC_URL = '/static/'
 
+# python manage.py collectstatic 명령어 실행하면 static 파일이 하나로 모이게 되는데
+# 그때 그 파일을 모아둘 장소를 알려주는 것이 STATIC_ROOT 이다.
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 STATICFILES_DIRS = [
