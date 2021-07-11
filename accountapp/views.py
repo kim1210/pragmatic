@@ -5,7 +5,7 @@ from django.shortcuts import render
 from django.urls import reverse, reverse_lazy
 
 # Create your views here.
-from django.views.generic import CreateView
+from django.views.generic import CreateView, DetailView
 
 from accountapp.models import HelloWorld
 
@@ -26,6 +26,7 @@ def hello_world(request):
         return render(request, 'accountapp/hello_world.html', context={'hello_world_list':hello_world_list})
 
 
+# 21강
 class AccountCreateView(CreateView):
     model = User
     form_class = UserCreationForm
@@ -34,4 +35,11 @@ class AccountCreateView(CreateView):
 
     template_name = 'accountapp/create.html'
     # 어떤 템플릿을 보여줄지 설정~
+
+# 24강
+class AccountDetailView(DetailView):
+    model = User
+    # CreateView와 달리 Read의 기능이기 때문에, form이나 success_url을 따로 지정할 필요가 없다.
+    context_object_name = 'target_user'
+    template_name = 'accountapp/detail.html'
 
