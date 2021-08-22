@@ -8,10 +8,12 @@ from django.urls import reverse, reverse_lazy
 # Create your views here.
 from django.utils.decorators import method_decorator
 from django.views.generic import CreateView, DetailView, UpdateView, DeleteView
+from django.views.generic.list import MultipleObjectMixin
 
 from accountapp.decorators import account_ownership_required
 from accountapp.forms import AccountUpdateForm
 from accountapp.models import HelloWorld
+from articleapp.models import Article
 
 has_ownership = [account_ownership_required, login_required]
 
@@ -44,11 +46,17 @@ class AccountCreateView(CreateView):
     # 어떤 템플릿을 보여줄지 설정~
 
 # 24강
-class AccountDetailView(DetailView):
+class AccountDetailView(DetailView, MultipleObjectMixin):
     model = User
     # CreateView와 달리 Read의 기능이기 때문에, form이나 success_url을 따로 지정할 필요가 없다.
     context_object_name = 'target_user'
     template_name = 'accountapp/detail.html'
+
+    paginate_by = 25
+
+    def get_context_data(self, **kwargs):
+        object_list = Article.objects.filter(writer=self.get_object())
+        return super(AccountDetailView, self).get_context_data(object_list=object_list, **kwargs)
 
 # 25강 - update는 create와 거의 비슷
 @method_decorator(has_ownership, 'get')
