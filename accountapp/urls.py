@@ -1,13 +1,11 @@
 from django.contrib.auth.views import LoginView, LogoutView
 from django.urls import path
 
-from accountapp.views import hello_world, AccountCreateView, AccountDetailView, AccountUpdateView, AccountDeleteView
+from accountapp.views import AccountCreateView, AccountDetailView, AccountUpdateView, AccountDeleteView
 
 app_name = "accountapp"
 
 urlpatterns = [
-    path('hello_world/', hello_world, name='hello_world'),
-
     # login과 logout은 작성해야 할 세부사항이 많지 않으므로 views.py에서 별도로 지정하지 않고,
     # urls.py에서 바로 가져와도 괜찮다.
     path('login/', LoginView.as_view(template_name='accountapp/login.html'), name='login'),
